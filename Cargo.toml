@@ -5,6 +5,9 @@ authors = ["Noah Shomette <git@noahshomette.me>"]
 edition = "2021"
 license = "MIT OR Apache-2.0"
 description = "Simple and easy tool to manage stats in Bevy"
+readme = "README.md"
+homepage = "https://github.com/NoahShomette/bevy_easy_stats"
+repository = "https://github.com/NoahShomette/bevy_easy_stats"
 
 
 [profile.dev.package."*"]
@@ -18,11 +21,11 @@ default = ["serde"]
 serde = ["dep:serde", "dep:erased-serde", "dep:typetag"]
 
 [dependencies]
-bevy = { version = "*" }
+bevy = { version = "0.14.2" }
 downcast-rs = { version = "1.2.1" }
-serde = { version = "*", optional = true }
+serde = { version = "1.0.210", optional = true }
 erased-serde = { version = "0.4.5", optional = true }
-typetag = { version = "*", optional = true }
+typetag = { version = "0.2.18", optional = true }
 dyn-clone = { version = "1.0.17" }
 
 [dev-dependencies]
