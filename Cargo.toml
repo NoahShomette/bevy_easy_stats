@@ -1,6 +1,6 @@
 [package]
 name = "bevy_easy_stats"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Noah Shomette <git@noahshomette.me>"]
 edition = "2021"
 license = "MIT OR Apache-2.0"
@@ -21,12 +21,12 @@ default = ["serde"]
 serde = ["dep:serde", "dep:erased-serde", "dep:typetag"]
 
 [dependencies]
-bevy = { version = "0.14.2" }
+bevy = { version = "0.15.0" }
 downcast-rs = { version = "1.2.1" }
-serde = { version = "1.0.210", optional = true }
+serde = { version = "1.0.215", optional = true }
 erased-serde = { version = "0.4.5", optional = true }
 typetag = { version = "0.2.18", optional = true }
 dyn-clone = { version = "1.0.17" }
 
 [dev-dependencies]
-serde_json = { version = "1.0.128" }
+serde_json = { version = "1.0.133" }
