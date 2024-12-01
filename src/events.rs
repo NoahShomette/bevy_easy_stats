@@ -27,7 +27,7 @@ impl StatAppExt for App {
         self.add_systems(
             PostUpdate,
             handle_stat_modifications::<StatCollection>
-                .run_if(on_event::<ModifyStat<StatCollection>>())
+                .run_if(on_event::<ModifyStat<StatCollection>>)
                 .in_set(StatSystemSets::ApplyModifications),
         );
     }

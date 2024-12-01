@@ -52,7 +52,7 @@ impl<StatCollection: AsMut<Stats> + Send + Sync + 'static + Component>
         stat_data: impl StatData,
     ) -> &mut Self {
         self.entity_commands()
-            .add(modify_entity_stat::<StatCollection>(
+            .queue(modify_entity_stat::<StatCollection>(
                 stat_id,
                 ModificationType::add(stat_data),
             ));
@@ -66,7 +66,7 @@ impl<StatCollection: AsMut<Stats> + Send + Sync + 'static + Component>
         stat_data: impl StatData,
     ) -> &mut Self {
         self.entity_commands()
-            .add(modify_entity_stat::<StatCollection>(
+            .queue(modify_entity_stat::<StatCollection>(
                 stat_id,
                 ModificationType::sub(stat_data),
             ));
@@ -80,7 +80,7 @@ impl<StatCollection: AsMut<Stats> + Send + Sync + 'static + Component>
         stat_data: impl StatData,
     ) -> &mut Self {
         self.entity_commands()
-            .add(modify_entity_stat::<StatCollection>(
+            .queue(modify_entity_stat::<StatCollection>(
                 stat_id,
                 ModificationType::set(stat_data),
             ));
@@ -90,7 +90,7 @@ impl<StatCollection: AsMut<Stats> + Send + Sync + 'static + Component>
     /// Queue a command to perform a remove to the targeted [`StatIdentifier`]
     pub fn remove(&mut self, stat_id: impl StatIdentifier + 'static + Send + Sync) -> &mut Self {
         self.entity_commands()
-            .add(modify_entity_stat::<StatCollection>(
+            .queue(modify_entity_stat::<StatCollection>(
                 stat_id,
                 ModificationType::remove(),
             ));
@@ -100,7 +100,7 @@ impl<StatCollection: AsMut<Stats> + Send + Sync + 'static + Component>
     /// Queue a command to perform a reset to the targeted [`StatIdentifier`]
     pub fn reset(&mut self, stat_id: impl StatIdentifier + 'static + Send + Sync) -> &mut Self {
         self.entity_commands()
-            .add(modify_entity_stat::<StatCollection>(
+            .queue(modify_entity_stat::<StatCollection>(
                 stat_id,
                 ModificationType::reset(),
             ));
@@ -169,7 +169,7 @@ impl<'a> StatEntityCommandsExt for EntityCommands<'a> {
         stat_id: impl StatIdentifier + 'static + Send + Sync,
         modification_type: ModificationType,
     ) {
-        self.add(modify_entity_stat::<StatCollection>(
+        self.queue(modify_entity_stat::<StatCollection>(
             stat_id,
             modification_type,
         ));
@@ -191,7 +191,7 @@ fn modify_entity_stat<StatCollection: AsMut<Stats> + Send + Sync + 'static + Com
     modification_type: ModificationType,
 ) -> impl EntityCommand {
     move |entity: Entity, world: &mut World| {
-        if let Some(mut entity_mut) = world.get_entity_mut(entity) {
+        if let Ok(mut entity_mut) = world.get_entity_mut(entity) {
             if let Some(mut stat_collection) = entity_mut.get_mut::<StatCollection>() {
                 let stats = stat_collection.as_mut().as_mut();
 

@@ -2,6 +2,13 @@
 
 A simple and easy way to keep track of stats in one place.
 
+## Bevy Version
+
+| BES Version | Bevy Version |
+| :---------: | :----------: |
+|     0.2     |     0.15     |
+|     0.1     |     0.14     |
+
 ## Usage
 
 ### 1. Create a new stat identifier
